@@ -15,10 +15,14 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = ["build app", "get rich", "disrupt"]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
     }
 
     
@@ -61,6 +65,8 @@ class TodoListViewController: UITableViewController {
             // what will happen when the user presses the button
 
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
             self.tableView.reloadData()
         }
